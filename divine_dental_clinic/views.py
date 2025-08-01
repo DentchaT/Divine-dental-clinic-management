@@ -564,8 +564,8 @@ def admin_dashboard(request):
     }
     return render(request, 'admin-dashboard.html', context=mydict)
 
-#@login_required(login_url="login")
-#@user_passes_test(is_admin)
+@login_required(login_url="login")
+@user_passes_test(is_admin)
 def admin(request):
     DoctorUserForm = Add_Doctor_UserForm()
     DoctorForm = Add_Doctor_Form()
