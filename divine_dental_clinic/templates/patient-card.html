@@ -1,0 +1,2338 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>DIVINE DENTAL CLINIC</title>
+    <link rel="shortcut icon" href="{% static 'img/vim-removebg.png' %}" type="image/x-icon">
+    <style>
+        .search-appointments{
+            margin-top: -5px;
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .search-appointments-container{
+            background-color: rgb(243, 241, 241);
+            border-top: 4px solid rgb(108, 192, 248);
+            padding-top: 5px;
+            padding-left: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .select{
+            border: 1px solid rgb(204, 203, 203);
+            width: 100%;
+        }
+
+        .patient-bio{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: -5px;
+        }
+        .patient-bio h5{
+            font-size: 19px; 
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 550;
+            margin-bottom: auto;
+        }
+        .patient-bio p{
+            font-size: 15px;
+            height: 10px;
+            font-family: sans-serif;
+        }
+        .patient-bio button{
+            border: none;
+            border-radius: 2px;
+            font-family: sans-serif;
+            font-size: 12px;
+            color: white;
+            height: 25px;
+        }
+
+        .tablink {
+            background-color: rgb(240, 239, 239);
+            color: rgb(65, 65, 65);
+            float: left;
+            border: none;
+            outline: none;
+            border-top: 3px solid rgb(204, 203, 203);
+            cursor: pointer;
+            width: 97px;
+            font-size: 12px;
+            font-family: sans-serif;
+            height: 40px;
+        }
+        .tablink:nth-child(1){
+            border-top-left-radius: 5px;
+        }
+        .tablink:nth-child(12){
+            border-top-right-radius: 5px;
+        }
+
+        .tablink:hover {
+            background-color: rgb(240, 239, 239);
+            border-top: 3px solid rgb(65, 65, 65);
+        }
+
+            /* Style the tab content (and add height:100% for full page content) */
+        .tabcontent {
+            display: none;
+            padding: 50px 8px;
+            height: 100%;
+            
+        }
+        .down-paragraph p{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 15px;
+            height: 5px;
+            color: #000;
+        }
+        .col-auto input::placeholder{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .col-auto input{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .col-auto textarea{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .col-auto textarea::placeholder{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .col-auto select{
+            font-family: sans-serif;
+            font-size: 12px;
+            background-color: white;
+        }
+        .col-auto option{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .form-check input::placeholder{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .form-check input{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .dex input{
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: 100;
+        }
+        .table th, td{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .table button{
+            border: none;
+            background-color: orange;
+            color: white;
+            border-radius: 3px;
+            height: 30px;
+            padding: 0 10px 0 10px;
+        }
+        .form-control::placeholder{
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        @media only screen and (max-width: 650px) {
+            .dashboard-cards{
+                width: 100%;
+                display:flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .Dashboardcontainer{
+                width: 98%;
+            }
+        }
+    </style>
+</head>
+
+<body style="background-color: rgb(235, 235, 238);">
+    <header style="position: fixed;width: 100%;">
+        <nav style="width: 100%; padding-top: 1px; background-color: rgb(224, 224, 224);">
+            <div style="
+            display: flex; justify-content: space-between;">
+                <div style="
+                width: 80%; 
+                display: flex;
+                background-color: hsl(0, 0%, 100%);
+                justify-content: space-between;
+                align-items: center;
+                padding: 1%;
+                border-radius: 3px;
+                border: 1px solid rgb(224, 224, 224);">
+                    <div style="display: flex;">
+                        <img style="height: 50px;margin: -20px 0 -20px 0;" src="{% static 'img/vim-removebg.png' %}" alt="img">
+                        <!--<h2 style="font-size: 18px;">DIVINE DENTAL CLINIC</h2>-->
+                    </div>
+                    <button id="refreshButton" style="
+                    background-color: rgb(108, 192, 248); 
+                    border: none;
+                    border-radius: 3px;
+                    color: white;"><i class="fa-solid fa-rotate"></i>Refresh</button>
+                </div>
+                <div class="dropdown" style="
+                display: flex; 
+                align-items: center;
+                padding: 1%;
+                width: 20%;
+                background-color: hsl(0, 0%, 100%);
+                gap: 10px;
+                border: 1px solid rgb(224, 224, 224);
+                border-radius: 3px;
+                align-items: center;">
+
+                    <div>
+                        <img style="width: 30px;height: 30px;border-radius: 50%;" src="{% static 'img/user.jpg' %}" alt="pic">
+                    </div>
+                    <div style="display: flex;flex-direction: column; justify-content: center; height: 30px;">
+                        <p style="font-size: 12px; font-weight: 500; margin-top: 15px;">Good day, {{request.user.username}}</p>
+                        <p style="font-size: 12px; margin-top: -15px; color: grey;font-weight: 500;">TDL</p>
+                    </div>
+                    <div>
+                        <a href="{% url 'my_profile' %}"><button style="
+                            background-color: white;
+                            border: none;"><i class="fa-solid fa-gear"></i></button></a>
+                    </div>
+
+                </div>
+            </div>
+        </nav> 
+        <nav style="
+        border-bottom: 6px solid rgb(108, 192, 248);
+        height: 40px;" class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link active" aria-current="page" href="{% url 'dashboard' %}"><i class="fa-solid fa-house"></i> Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'queue' %}"><i class="fa-solid fa-id-card"></i> Queue</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'appointments' %}"><i class="fa-solid fa-calendar-days"></i> Appointments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'patient_treatment' %}"><i class="fa-solid fa-database"></i> Patient Treatment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'online_diary' %}"><i class="fa-solid fa-calendar-days"></i> Online Diary</a>
+                        </li>
+                    </ul>
+                    
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="extended">
+
+        <div class="search-appointments" style="padding-top: 130px; margin-bottom: 60px;">
+
+            <div style="
+                background-color: rgb(243, 241, 241);
+                color: black;
+                padding: 5px;
+                border-bottom: 1px solid rgb(204, 203, 203);
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;">
+                <div class="patient-bio">
+                    <p>Name:</p>
+                    <h5>{{patient.first_name}} {{patient.last_name}}</h5>&nbsp;&nbsp;
+                    <p>Billed Amount:</p>
+                    <h5>Ugshs.{{bill.total}}</h5>
+                </div>
+                <div class="patient-bio">
+                    <p>Visit Type:</p>
+                    <p>{{patient.queue_set.all.0.type}}</p>&nbsp;&nbsp;
+                    <p>Payment Received:</p>
+                    <h5>Ugshs.{{bill.deduct}}</h5>
+                </div>
+                <div style="display: flex;justify-content: space-between;">
+                    <div class="patient-bio" style="margin-bottom: 12px;">
+                        <p>Total Balance Shs:</p>
+                        <h5>Ugshs.{{bill.lab}}</h5>
+                        <a href="{% url 'individual_statement' patient.pk %}"><button style="background-color: navy;">Statement</button></a>
+                        <a href="{% url 'download_history' pk=patient.patienthistory_set.all.1.id %}"><button style="background-color: orange;">Print History Notes</button></a>
+                    </div>
+                    <div class="patient-bio">
+                        <a href="{% url 'queue' %}"><button style="background-color: rgb(108, 192, 248);">Back To Queue</button></a>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div style=" 
+            padding: 20px;
+            background-color: rgb(255, 255, 255);
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;">
+                <button class="tablink" onclick="openPage('Home', this, 'white')" id="defaultOpen">Patient card history</button>
+                <button class="tablink" onclick="openPage('News', this, 'white')">Orthodontics Chart</button>
+                <button class="tablink" onclick="openPage('Contact', this, 'white')">Schwartz Analysis</button>
+                <button class="tablink" onclick="openPage('About', this, 'white')">Patient Details</button>
+                <button class="tablink" onclick="openPage('vitals', this, 'white')">Vitals</button>
+                <button class="tablink" onclick="openPage('prescription', this, 'white')">Prescription</button>
+                <button class="tablink" onclick="openPage('lab-request', this, 'white')">Lab Request</button>
+                <button class="tablink" onclick="openPage('xray-request', this, 'white')">Xray Request</button>
+                <button class="tablink" onclick="openPage('referral-note', this, 'white')">Referral Note</button>
+                <button class="tablink" onclick="openPage('sick-leave', this, 'white')">Sick Leave</button>
+                <button class="tablink" onclick="openPage('uploads', this, 'white')">Uploads</button>
+                <button class="tablink" onclick="openPage('visit-billing', this, 'white')">Visit Billing</button>
+                
+                <div id="Home" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div class="table-responsive" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none; padding: 10px;">
+                        <h5 style="font-family: Arial;font-weight: 500;margin-bottom: -1px;color: black;">Patient History</h5>
+                        <p style="margin-bottom: 2px;font-size: 12px;font-family: Arial;color: black;">No action to perform No action to perform</p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">#</th>
+                                    <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Visit Date</th>
+                                    <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Doctors Notes</th>
+                                    <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Doctor</th>
+                                    <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Visit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for history in patient_history %}
+                                    <tr>
+                                        <th scope="row" style="font-size: 12px;font-family: sans-serif, Courier;">{{history.id}}</th>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier;">{{history.created_at}}</td>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier;">
+                                            <div>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Hp C/O</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Hp_CO}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">PM Hx</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.PM_Hx}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">PD Hx</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.PD_Hx}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Soft Tissue</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Soft_Tissue}}</p><br>
+                                                <div> 
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;">Hard Tissue</h5>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">General:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_General}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Decayed:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Decayed}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Filled:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Filled}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Missing:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Missing}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Other:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Other}}</p><br>
+                                                </div>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Investigations:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Investigations}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Occlusal Exam:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Occlusal_Exam}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Findings:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Findings}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Plan:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Plan}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Rx Done:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Rx_Done}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">TCA:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.TCA}}</p><br>
+                                            </div>
+                                        </td>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier;">{{history.doctor}}</td>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier; width: 150px;"></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <div style="display: flex; flex-direction: column;">
+                            <div style="display: flex;
+                            justify-content: space-between; 
+                            border-top: 1px solid rgb(204, 203, 203);
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            padding-top: 20px;">
+                                <div></div>
+                                <div style="display: flex;gap: 10px;">
+                                    <a href="{% url 'queue_schedule_appointment' pk=queue.id%}"><button style="
+                                    background-color: green;
+                                    border: none;
+                                    padding: 5px;
+                                    font-family: sans-serif;
+                                    font-size: 13px;
+                                    border-radius: 3px;
+                                    color: white;"><i class="fa-solid fa-plus"></i> Schedule Appointment</button></a>
+                                    <a href="{% url 'online_diary' %}"><button style="
+                                    background-color: orange;
+                                    border: none;
+                                    padding: 5px;
+                                    font-family: sans-serif;
+                                    font-size: 13px;
+                                    border-radius: 3px;
+                                    color: white;"><i class="fa-solid fa-calendar-days"></i> Online Diary <i class="fa-solid fa-right-long"></i></button></a>
+                                </div>
+                            </div>
+                            <div style="display: flex;justify-content: space-between;">
+                                <div class="down-paragraph">
+                                    <p>Appointment List from {{patient_history_set.0.created_at}}</p>
+                                    <p>\</p>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    </div>
+                
+                    <div id="News" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <form id="orthodontics-chart-form" action="" style="width: 60%;
+                    border-bottom: 1px solid rgb(240, 239, 239);
+                    margin-top: 50px;">
+                        <div style="display: flex; 
+                        gap: 40px;
+                        padding-left: 50px;">
+                            <div>
+                                <p style="width: 200px;
+                                font-family: sans-serif;
+                                text-align: end;
+                                font-size: 12px;">Are you currenty under a Physicians care ?</p>
+                            </div>
+                            <div style="display: flex; width: 200px; justify-content: space-between;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                    <label class="form-check-label" for="inlineRadio1" style="font-size: 12px;">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <label class="form-check-label" for="inlineRadio2" style="font-size: 12px;">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; 
+                        padding-left: 50px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">Physician name</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 130px;height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">Physician phone ?</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 130px; height: 30px;" type="text" placeholder="Physician phone" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Chief complaint</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Angle Classification</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Face profile</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Open Bite ?</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div style="display: flex; 
+                            padding-left: 80px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 70px;
+                                        text-align: end;
+                                        font-size: 12px;">l)Anterior</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <textarea class="form-control" style="width: 138px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; 
+                            padding-left: 10px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 68px;
+                                        text-align: end;
+                                        font-size: 12px;">ll) Lateral</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <textarea class="form-control" style="width: 138px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Habits ?</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Cross Bites</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Over Jet ?</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Overbites</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Photos</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Check palatal and lingual aspect of models and cast analysis</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Midlines</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex;">
+                            <div style="display: flex; 
+                            padding-left: 80px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 60px;
+                                        text-align: end;
+                                        font-size: 12px;">l) Upper</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <textarea class="form-control" style="width: 138px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; 
+                            padding-left: 10px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 60px;
+                                        text-align: end;
+                                        font-size: 12px;">ll) Lower</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <textarea class="form-control" style="width: 138px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Mentalis labialis sulcus</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Treatment Plan</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex; 
+                        padding-left: 100px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 120px;
+                                    text-align: end;
+                                    font-size: 12px;">Payment method</label>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea class="form-control" style="width: 300px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div style="display: flex;">
+                            <div style="display: flex; 
+                            padding-left: 80px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 60px;
+                                        text-align: end;
+                                        font-size: 12px;">i) 50% of the total amount on the start treatment</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <textarea class="form-control" style="width: 138px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; 
+                            padding-left: 10px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 60px;
+                                        text-align: end;
+                                        font-size: 12px;">ii) An amount to be paid on each subsequent visit</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <textarea class="form-control" style="width: 138px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div style="display: flex; 
+                            padding-left: 80px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 60px;
+                                        text-align: end;
+                                        font-size: 12px;">Extra cost for any ortho appliance broken or lost bracket</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <textarea class="form-control" style="width: 138px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; 
+                            padding-left: 10px;
+                            border-top: 1px solid rgb(240, 239, 239);
+                            gap: 50px;">
+                                <button type="submit" style=" 
+                                background-color: navy;
+                                border: none;
+                                border-radius: 3px;
+                                color: white;
+                                height: 30px;
+                                margin-top: 50px;
+                                padding-left: 15px;
+                                padding-right: 15px;
+                                margin-left: 30px;">UPDATE MEDICAL HISTORY</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                
+                <div id="Contact" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <form id="schwarz-analysis-form" action="" style="width: 60%;
+                    border-bottom: 1px solid rgb(240, 239, 239);
+                    margin-top: 50px;">
+                        <h4 style="padding-left: 30px;
+                        font-family: sans-serif;">SCHWARZ ANAYSIS</h4>
+                        <div style="display: flex; 
+                        gap: 20px;
+                        align-items: center;
+                        padding-left: 50px;">
+                            <div>
+                                <p style="width: 200px;
+                                font-family: sans-serif;
+                                text-align: end;
+                                font-size: 12px;">U1W(Equals)</p>
+                            </div>
+                            <div style="display: flex; width: 600px;margin-bottom: 25px;">
+                                <div class="form-check form-check-inline">
+                                    <input style="height: 30px;width: 340px;" class="form-control" placeholder="First name" type="text" name="inlineRadioOptions" id="inlineRadio1">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div style="display: flex; 
+                            padding-left: 40px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 60px;
+                                        text-align: end;
+                                        font-size: 12px;">Cast</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; 
+                            padding-left: 140px;
+                            gap: 50px;">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="inputPassword6" class="col-form-label" style="
+                                        font-family: sans-serif;
+                                        width: 60px;
+                                        text-align: end;
+                                        font-size: 12px;">Expected</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 0px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">U4</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px;height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;"></label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px; height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 0px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">U6</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px;height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;"></label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px; height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 0px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">L4</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px;height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;"></label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px; height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 0px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">L6</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px;height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;"></label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 100px; height: 30px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <h4 style="padding-left: 30px;
+                        font-family: sans-serif;">CEPH REPORT</h4>
+                        <div style="display: flex; 
+                        padding-left: 50px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">SNA</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 230px;height: 30px;margin-left: 20px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 50px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">SNB</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 230px;height: 30px;margin-left: 20px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        padding-left: 50px;
+                        gap: 50px;">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputPassword6" class="col-form-label" style="
+                                    font-family: sans-serif;
+                                    width: 80px;
+                                    text-align: end;
+                                    font-size: 12px;">Air way</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input style="width: 230px;height: 30px;margin-left: 20px;" type="text" placeholder="First name" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        flex-direction: column;
+                        padding-left: 0px;">
+                            <div class="col-auto">
+                                <label for="inputPassword6" class="col-form-label" style="
+                                font-family: sans-serif;
+                                width: 100%;
+                                padding-left: 230px;
+                                font-size: 12px;">OPG REPORT</label>
+                            </div>
+                            <div class="col-auto">
+                                <textarea class="form-control" style="width: 100%;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        flex-direction: column;
+                        padding-left: 0px;">
+                            <div class="col-auto">
+                                <label for="inputPassword6" class="col-form-label" style="
+                                font-family: sans-serif;
+                                width: 100%;
+                                padding-left: 230px;
+                                font-size: 12px;">General Notes</label>
+                            </div>
+                            <div class="col-auto">
+                                <textarea class="form-control" style="width: 100%;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        flex-direction: column;
+                        padding-left: 0px;">
+                            <div class="col-auto">
+                                <label for="inputPassword6" class="col-form-label" style="
+                                font-family: sans-serif;
+                                width: 100%;
+                                padding-left: 230px;
+                                font-size: 12px;">CEPH REPORT</label>
+                            </div>
+                            <div class="col-auto">
+                                <textarea class="form-control" style="width: 100%;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: flex; 
+                        flex-direction: column;
+                        margin-top: 20px;
+                        padding-left: 0px;">
+                            <div class="col-auto">
+                                <button style=" 
+                                background-color: navy;
+                                border: none;
+                                border-radius: 5px;
+                                color: white;
+                                padding: 6px;
+                                width: 90px;">UPDATE</button>
+                            </div>
+                        </div><br>
+                    </form>
+                </div>
+                
+                <div id="About" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div style=" 
+                    display: flex;
+                    margin-top: 20px;
+                    flex-direction: column;">
+                        <div style=" 
+                        height: 20px;
+                        border-top-right-radius: 5px;
+                        border-top-left-radius: 5px;
+                        background-color: rgb(240, 239, 239);
+                        border-bottom: 1px solid rgb(204, 203, 203);"></div>
+                        <div style="
+                        background-color: rgb(252, 252, 252);
+                        padding-bottom: 30px;">
+                            <form action="" style=" 
+                            display: flex;
+                            padding-top: 10px;">
+                                <div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 80px;
+                                                text-align: end;
+                                                font-size: 12px;">Surname: </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input disabled style="width: 320px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);" type="text" placeholder="{{patient.first_name}}" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 80px;
+                                                text-align: end;
+                                                font-size: 12px;">Other Names: </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input disabled style="width: 320px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);" type="text" placeholder="{{patient.last_name}}" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 80px;
+                                                text-align: end;
+                                                font-size: 12px;">Card Number: </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input disabled style="width: 320px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);" type="text" placeholder="{{queue.number}}" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 80px;
+                                                text-align: end;
+                                                font-size: 12px;">Date Of Birth: </label>
+                                            </div>
+                                            <div class="col-auto" style="display: flex;">
+                                                <input disabled style="width: 320px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);"  placeholder="{{patient.date_of_birth}}"  id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 80px;
+                                                text-align: end;
+                                                font-size: 12px;">Email: </label>
+                                            </div>
+                                            <div class="col-auto" style="display: flex;">
+                                                <input disabled style="width: 320px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);"  placeholder="{{patient.email}}"  id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 80px;
+                                                text-align: end;
+                                                font-size: 12px;">Primary Phone: </label>
+                                            </div>
+                                            <div class="col-auto" style="display: flex;">
+                                                <input disabled style="width: 320px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);"  placeholder="{{patient.phone}}"  id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 80px;
+                                                text-align: end;
+                                                font-size: 12px;">Gender: </label>
+                                            </div>
+                                            <div class="col-auto" style="display: flex;">
+                                                <select name="" id="inputPassword6" style="border-radius: 5px; width: 320px;height: 25px;margin-left: 20px;">
+                                                    <option value="{{patient.gender}}">{{patient.gender}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 150px;
+                                                text-align: end;
+                                                font-size: 12px;">Residence: </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input disabled style="width: 300px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);" type="text" placeholder="{{patient.residence}}" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 150px;
+                                                text-align: end;
+                                                font-size: 12px;">Next of Kin Surname: </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input disabled style="width: 300px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);" type="text" placeholder="Kin Surname" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 150px;
+                                                text-align: end;
+                                                font-size: 12px;">Next of Kin Other Names: </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input disabled style="width: 300px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);" type="text" placeholder="Kin Other Names" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 150px;
+                                                text-align: end;
+                                                font-size: 12px;">Next of Kin Contact: </label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <input disabled style="width: 300px;height: 25px;margin-left: 20px; outline: 1px solid rgb(182, 182, 182);" type="text" placeholder=" " id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 150px;
+                                                text-align: end;
+                                                font-size: 12px;">Relationship To Kin: </label>
+                                            </div>
+                                            <div class="col-auto" style="display: flex;">
+                                                <select name="" id="inputPassword6" style="border-radius: 5px; width: 300px;height: 25px;margin-left: 20px;">
+                                                    <option value="Self">Self</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 100px;
+                                    margin-top: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 150px;
+                                                text-align: end;
+                                                font-size: 12px;">Insurance : </label>
+                                            </div>
+                                            <div class="col-auto" style="display: flex;">
+                                                <select name="" id="inputPassword6" style="border-radius: 5px; width: 300px;height: 25px;margin-left: 20px;">
+                                                    <option value="{{queue.type}}">{{queue.type}}</option> 
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="
+                        background-color: rgb(252, 252, 252);
+                        padding: 30px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        gap: 30px;
+                        margin-top: 20px;
+                        margin-bottom: 5px;
+                        border-bottom: 1px solid rgb(240, 239, 239);
+                        border-top: 3px solid navy;
+                        border-radius: 3px  3px ;">
+                            <form id="medical-condition-form" method="post" style="display: flex; justify-content: center;gap: 20px;">
+                            {% csrf_token %}    
+                            <div style=" 
+                            background-color: rgb(252, 252, 252);
+                            border-top: 3px solid navy;
+                            border-radius: 3px  3px ;">
+                                <div style="width: 100%; 
+                                height: 30px;
+                                border-bottom: 1px solid rgb(240, 239, 239);
+                                margin-bottom: 15px;"></div>
+                                <div>
+                                    <div style="display: flex; 
+                                    padding-left: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 120px;
+                                                text-align: start;
+                                                font-size: 12px;">Medical Condition:</label>
+                                            </div>
+                                            {% if patient_conditions %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="condition" placeholder="{{patient_conditions.medical_condition}}" style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="condition" placeholder=" " style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 10px;
+                                    margin-top: 5px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 120px;
+                                                text-align: start;
+                                                font-size: 12px;">List of any medicine you been taking:</label>
+                                            </div>
+                                            {% if patient_conditions %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="drugs" placeholder="{{patient_conditions.drugs}}" style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="drugs" placeholder=" " style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style=" 
+                            background-color: rgb(252, 252, 252);
+                            border-top: 3px solid navy;
+                            border-radius: 3px  3px ;">
+                                <div style="width: 100%; 
+                                height: 30px;
+                                border-bottom: 1px solid rgb(240, 239, 239);
+                                margin-bottom: 15px;"></div>
+                                <div>
+                                    <div style="display: flex; 
+                                    padding-left: 10px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 120px;
+                                                text-align: start;
+                                                font-size: 12px;">Are you allegic to any medicine:</label>
+                                            </div>
+                                            {% if patient_conditions %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="allergies" placeholder="{{patient_conditions.allergies}}" style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="allergies" placeholder=" " style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; 
+                                    padding-left: 10px;
+                                    margin-top: 5px;
+                                    gap: 50px;">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-auto">
+                                                <label for="inputPassword6" class="col-form-label" style="
+                                                font-family: sans-serif;
+                                                width: 120px;
+                                                text-align: start;
+                                                font-size: 12px;">Are you Pregnant or Breastfeeding:</label>
+                                            </div>
+                                            {% if patient_conditions %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="pregnancy" placeholder="{{patient_conditions.pregnancy}}" style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-auto">
+                                                    <textarea class="form-control" name="pregnancy" placeholder=" " style="width: 320px;height: 30px;"  type="text" id="inputPassword6" rows="1"></textarea>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                            <button type="submit" name="medical_condition" form="medical-condition-form" style="
+                            width: 50px;
+                            border: none;
+                            border-radius: 5px;
+                            background-color: purple;
+                            margin-left: 48%;
+                            color: white;
+                            font-family: sans-serif;
+                            font-size: 12px;
+                            height: 30px;">Save</button>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div id="vitals" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <form method="post" enctype="multipart/form-data" id="vitals-form" action="" style="
+                    border: 1px solid rgb(240, 239, 239);
+                    margin-left: 0px;
+                    padding-left: 20px;
+                    width: 100%;
+                    border-top: none;">
+                    {% csrf_token %}
+                        <h5 style=" 
+                        font-family: sans-serif;
+                        font-size: 18px;">Vitals</h5>
+                        <div style="display: flex; gap: 70px;margin-bottom: 20px;">
+                            <div style="display: flex; flex-direction: column; width: 20%;">
+                                <div class="dex" style="width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Systolic:</label>
+                                    <input id="vitals" name="systolic" placeholder="{{vitals.systolic}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                                <div class="dex" style="width: 100%;margin-top: 10px; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Diastolic:</label>
+                                    <input id="vitals" name="diastolic" placeholder="{{vitals.diastolic}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                                <div class="dex" style="width: 100%;margin-top: 10px; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Weight (kg):</label>
+                                    <input id="vitals" name="weight" placeholder="{{vitals.weight}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column;width: 20%;">
+                                <div class="dex" style="width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Height:</label>
+                                    <input id="vitals" name="height" placeholder="{{vitals.height}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                                <div class="dex" style="width: 100%;margin-top: 10px; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Hip:</label>
+                                    <input id="vitals" name="hip" placeholder="{{vitals.hip}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                                <div class="dex" style="width: 100%;margin-top: 10px; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Waist:</label>
+                                    <input id="vitals" name="waist" placeholder="{{vitals.waist}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column;width: 20%;">
+                                <div class="dex" style="width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Temp:</label>
+                                    <input id="vitals" name="temp" placeholder="{{vitals.temp}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                                <div class="dex" style="width: 100%;margin-top: 10px; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Pulse:</label>
+                                    <input id="vitals" name="pulse" placeholder="{{vitals.pulse}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                                <div class="dex" style="width: 100%;margin-top: 10px; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Respiration:</label>
+                                    <input id="vitals" name="respiration" placeholder="{{vitals.respiration}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column;width: 20%;">
+                                <div class="dex" style="width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Oxygen Saturation :</label>
+                                    <input id="vitals" name="oxygen_saturation" placeholder="{{vitals.oxygen_saturation}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                                <div class="dex" style="width: 100%;margin-top: 10px; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Pain (0 - 10):</label>
+                                    <input id="vitals" name="pain" placeholder="{{vitals.pain}}" class="form-control" type="text" style="width: 60px;border-radius: 5px; border: 1px solid rgb(204, 203, 203);">
+                                </div>
+                            </div>
+                        </div>   
+                        <button form="vitals-form" name="vitals" style="border: none;
+                        border-radius: 3px;
+                        background-color: green;
+                        color: white;
+                        margin-left: 46%;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        padding: 5px 10px 5px 10px;
+                        " type="submit">Save Vitals</button> 
+                        <h5 style=" 
+                        font-family: sans-serif;
+                        font-size: 18px;">Vitals history</h5>
+                    </form>
+                    
+                </div>
+                <div id="prescription" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div>
+                        <form method="post" enctype="multipart/form-data" id="prescription-form" action="" style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        width: 100%;
+                        border-top: none;
+                        border-bottom: none;">
+                        {% csrf_token %}
+                            <div style="display: flex; flex-direction: column;width: 100%;">
+                                <div class="dex" style="margin-top: 10px; width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Prescription :</label>
+                                    <textarea id="vitals" required name="prescribe" class="form-control" rows="6" type="text" style="margin-right: 30px; width: 70%;border-radius: 2px; border: 1px solid rgb(204, 203, 203);"></textarea>
+                                </div>
+                                <button type="submit" name="prescription" form="prescription-form" style=" 
+                                border: none;
+                                color: white;
+                                background-color: rgb(108, 192, 248);
+                                border-radius: 3px;
+                                font-family: sans-serif;
+                                font-size: 12px;
+                                margin-top: 20px;
+                                margin-left: 42%;
+                                width: 120px;
+                                height: 30px;">Save Prescription</button>
+                            </div>
+                        </form>
+                        <a href="{% url 'download_prescription' patient.pk %}"><button style=" 
+                        border: none;
+                        color: white;
+                        background-color: orange;
+                        border-radius: 3px;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        margin-top: 20px;
+                        margin-left: 42%;
+                        width: 150px;
+                        height: 30px;">Print Prescription</button></a>
+                        <div style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                            <table class="table table-bordered" style="width: 97.5%;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Prescription</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in prescription %}
+                                        <tr>
+                                            <td>{{p.created_at}}</td>
+                                            <td>{{p.prescription}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id="lab-request" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div>
+                        <form id="lab_form" method="post" enctype="multipart/form-data" action="" style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                        {% csrf_token %}
+                            <div style="display: flex; flex-direction: column;width: 100%;">
+                                <div class="dex" style="margin-top: 10px; width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Lab Request  :</label>
+                                    <textarea id="vitals" name="lab" required class="form-control" rows="6" type="text" style="margin-right: 30px; width: 70%;border-radius: 2px; border: 1px solid rgb(204, 203, 203);"></textarea>
+                                </div>
+                                <div style="display: flex; justify-content: center;gap: 5px;">
+                                    <button type="submit" form="lab_form" style=" 
+                                    border: none;
+                                    color: white;
+                                    background-color: rgb(108, 192, 248);
+                                    border-radius: 3px;
+                                    font-family: sans-serif;
+                                    font-size: 12px;
+                                    margin-top: 20px;
+                                    width: 100px;
+                                    height: 30px;" name="lab_request">Save Request</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="{% url 'download_labrequest' patient.pk %}"><button style="  
+                        border: none;
+                        color: white;
+                        background-color: orange;
+                        border-radius: 3px;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        margin-top: 20px;
+                        margin-left: 42%;
+                        width: 190px;
+                        height: 30px;">Print Lab request</button></a>
+
+                        <div style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                            <table class="table table-bordered" style="width: 97.5%;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Lab Request</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in lab_request %}
+                                        <tr>
+                                            <td>{{p.created_at}}</td>
+                                            <td>{{p.lab_request}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                
+                    
+                </div>
+                <div id="xray-request" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div>
+                        <form id="xray-form" method="post" enctype="multipart/form-data" action="" style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                        {% csrf_token %}
+                            <div style="display: flex; flex-direction: column;width: 100%;">
+                                <div class="dex" style="margin-top: 10px; width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Xray :</label>
+                                    <textarea id="vitals" required name="xray" class="form-control" rows="6" type="text" style="margin-right: 30px; width: 70%;border-radius: 2px; border: 1px solid rgb(204, 203, 203);"></textarea>
+                                </div>
+                                <div style="display: flex; justify-content: center;gap: 5px;">
+                                    <button type="submit" form="xray-form" style=" 
+                                    border: none;
+                                    color: white;
+                                    background-color: rgb(108, 192, 248);
+                                    border-radius: 3px;
+                                    font-family: sans-serif;
+                                    font-size: 12px;
+                                    margin-top: 20px;
+                                    width: 80px;
+                                    height: 30px;" name="xray_request">Save Xray</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="{% url 'download_xrayrequest' patient.pk %}"><button style=" 
+                        border: none;
+                        color: white;
+                        background-color: orange;
+                        border-radius: 3px;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        margin-top: 20px;
+                        margin-left: 42%;
+                        width: 190px;
+                        height: 30px;">Print Xray Request</button></a>
+                        <div style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                            <table class="table table-bordered" style="width: 97.5%;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Xray Request</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in xray_request %}
+                                        <tr>
+                                            <td>{{p.created_at}}</td>
+                                            <td>{{p.xray_request}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>  
+                <div id="referral-note" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div>
+                        <form id="referral-form" method="post" enctype="multipart/form-data" action="" style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                        {% csrf_token %}
+                            <div style="display: flex; flex-direction: column;width: 100%;">
+                                <div class="dex" style="margin-top: 10px; width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Refferal Note :</label>
+                                    <textarea id="vitals" name="referral" required class="form-control" rows="6" type="text" style="margin-right: 30px; width: 70%;border-radius: 2px; border: 1px solid rgb(204, 203, 203);"></textarea>
+                                </div>
+                                <div style="display: flex; justify-content: center;gap: 5px;">
+                                    <button type="submit" form="referral-form" name="referral_note" style=" 
+                                    border: none;
+                                    color: white;
+                                    background-color: rgb(108, 192, 248);
+                                    border-radius: 3px;
+                                    font-family: sans-serif;
+                                    font-size: 12px;
+                                    margin-top: 20px;
+                                    width: 120px;
+                                    height: 30px;">Save Refferal Note</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="{% url 'download_referralnote' patient.pk %}"><button style=" 
+                        border: none;
+                        color: white;
+                        background-color: orange;
+                        border-radius: 3px;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        margin-top: 20px;
+                        margin-left: 42%;
+                        width: 190px;
+                        height: 30px;">Print Referral Note</button></a>
+                        <div style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                            <table class="table table-bordered" style="width: 97.5%;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Referral Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in referral %}
+                                        <tr>
+                                            <td>{{p.created_at}}</td>
+                                            <td>{{p.referral_note}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id="sick-leave" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div>
+                        <form method="post" enctype="multipart/form-data" id="sick" action="" style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                        {% csrf_token %}
+                            <div style="display: flex; flex-direction: column;width: 100%;">
+                                <div class="dex" style="margin-top: 10px; width: 100%; display: flex; justify-content: space-between;">
+                                    <label for="vitals" style="font-family: sans-serif;font-size: 12px;">Sick Leave Note:</label>
+                                    <textarea id="vitals" name="leave" required class="form-control" rows="4" type="text" style="margin-right: 30px; width: 70%;border-radius: 2px; border: 1px solid rgb(204, 203, 203);"></textarea>
+                                </div>
+                                <div style="display: flex; justify-content: center;gap: 5px;">
+                                    <button type="submit" name="sick_leave" form="sick" style=" 
+                                    border: none;
+                                    color: white;
+                                    background-color: rgb(108, 192, 248);
+                                    border-radius: 3px;
+                                    font-family: sans-serif;
+                                    font-size: 12px;
+                                    margin-top: 20px;
+                                    width: 150px;
+                                    height: 30px;">Save Sick Leave Note</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="{% url 'download_sickleave' patient.pk %}"><button style=" 
+                        border: none;
+                        color: white;
+                        background-color: orange;
+                        border-radius: 3px;
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        margin-top: 20px;
+                        margin-left: 42%;
+                        width: 190px;
+                        height: 30px;">Print Sick Leave</button></a>
+                        <div style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                            <table class="table table-bordered" style="width: 97.5%;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Sick Leave</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in sick_leave %}
+                                        <tr>
+                                            <td>{{p.created_at}}</td>
+                                            <td>{{p.sick_leave}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id="uploads" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <div style="padding-bottom: 30px; margin-left: 0px; width: 100%;padding-left: 10px; padding-top: 20px;border: 1px solid rgb(240, 239, 239);border-top: none; ">
+                        <div style="border-radius: 5px 5px 0 0; height: 40px; width: 99%; background-color: rgb(240, 239, 239);border-bottom: 1px solid rgb(204, 203, 203);">
+                            <h5 style="
+                            padding: 10px;
+                            font-family: sans-serif;
+                            font-size: 16px;">Documents</h5>
+                        </div>
+                        <form id="upload" method="post" enctype="multipart/form-data" action="" style="border-radius:  0 0 5px 5px; width: 99%; background-color: rgb(252, 252, 252); border-bottom: 1px solid rgb(240, 239, 239)">
+                            {% csrf_token %}
+                            <div style="display: flex;justify-content: center;gap: 80px;margin-top: 30px;">
+                            
+                                <div>
+                                    <label style="width: 120px;font-size: 12px;font-family: sans-serif;" for="selector">Document Type:</label>
+                                    <select name="type" style="height: 30px;padding-left: 5px; width: 170px; font-size: 12px;border: 1px solid rgb(204, 203, 203);border-radius: 5px;" name="" id="selector">
+                                        <option style="font-size: 12px;" value="XRAY">XRAY</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="width: 120px;font-size: 12px;font-family: sans-serif;" for="selector">Document Name *:</label>
+                                    <input name="name" style="height: 30px;padding-left: 5px; width: 170px; font-size: 12px;border: 1px solid rgb(204, 203, 203);border-radius: 5px;" placeholder="Document Title Name" id="selector">
+                                </div>
+                                <div>
+                                    <label style="width: 120px;font-size: 12px;font-family: sans-serif;" for="selector">Document Scan *:</label>
+                                    <input name="xray" required type="file" style="height: 30px;padding-left: 5px; width: 170px; font-size: 12px;border: 1px solid rgb(204, 203, 203);border-radius: 5px;"  id="selector">
+                                </div>
+                            </div>
+                            <div style="display: flex;justify-content: center;padding-top: 20px;">
+                                <button type="submit" form="upload" name="upload" style="border: none;
+                                color: white;
+                                border-radius: 5px;
+                                font-family: sans-serif;
+                                padding: 5px;
+                                width: 180px;
+                                font-size: 15px;
+                                background-color: navy;">Upload document image</button>
+                            </div>
+                            <div style="margin-bottom: 30px;">
+                                <p style=" 
+                                    font-size: 12px;
+                                    font-family: sans-serif;
+                                    margin-left: 20px;">No plans have been added</p>
+                            </div>
+                        </form>
+                        <div style="
+                        border: 1px solid rgb(240, 239, 239);
+                        margin-left: 0px;
+                        padding-left: 20px;
+                        padding-bottom: 10px;
+                        width: 100%;
+                        border-top: none;">
+                            <table class="table table-bordered" style="width: 97.5%;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Xray image</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in upload %}
+                                        <tr>
+                                            <td>{{p.created_at}}</td>
+                                            <td>{{p.name}}</td>
+                                            <td><img style="width: 500px; border-radius: 5px; height: auto;" src="{{p.xray.url}}" alt="{{p.patient}}'s xray"></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="visit-billing" class="tabcontent" style="border-radius: 5px; border: 1px solid rgb(221, 220, 220);border-top: none;width: 89.5%;">
+                    <form method="post" id="bill-form" enctype="multipart/form-data" style="display: flex;
+                    border: 1px solid rgb(204, 203, 203); 
+                    border-radius: 5px;
+                    padding-right: 10px;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;">
+                    {% csrf_token %}
+                        <div style="width: 55%;padding-top: 20px;">
+                            <div style="display: flex; 
+                            padding-left: 30px;
+                            gap: 70px;">
+                                <div>
+                                    <div style="display: flex;justify-content: center; align-items: center;">
+                                        <label style="font-family: sans-serif;
+                                        font-size: 12px;"  for="inside">Service 1:</label>
+                                        <select style="
+                                        width: 300px;
+                                        height: 40px;
+                                        padding-left: 20px;
+                                        border-radius: 0px;
+                                        font-family: sans-serif;
+                                        font-size: 12px;" name="service1" id="inside">
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value=" ">None - please select a service</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Consultation">Consultation</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Extraction/pead">Extraction/pead</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Extraction/adult">Extraction/adult</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/amalgam">Restoration/amalgam</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/composite">Restoration/composite</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/GI">Restoration/GI</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/temporary">Restoration/temporary</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="RCT/posterior">RCT/posterior</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="RCT/anterior">RCT/anterior</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Pulpotomy">Pulpotomy</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Pulpectomy">Pulpectomy</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/PFM">Crown(Bridge)/PFM</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Metal">Crown(Bridge)/Metal</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Zirconia">Crown(Bridge)/Zirconia</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Emax">Crown(Bridge)/Emax</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Orthodontic treatment(Braces)">Orthodontic treatment(Braces)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Ortho adjustments">Ortho adjustments</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Denture/partial">Denture/partial</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Denture/complete">Denture/complete</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Implant">Implant</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Scaling and polishing">Scaling and polishing</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Root planning">Root planning</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Root planning/bone graft(surgical)">Root planning/bone graft(surgical)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Surgical Disimpaction">Surgical Disimpaction</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/Peria-apical">X-Ray/Peria-apical</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/OPG(2D)">X-Ray/OPG(2D)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/OPG(Digital)">X-Ray/OPG(Digital)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Retainer/removable">Retainer/removable</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Retainer/fixed">Retainer/fixed</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Impressions for orthodontics">Impressions for orthodontics</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: flex;justify-content: center; align-items: center;">
+                                        <label style="font-family: sans-serif;
+                                        font-size: 12px;"  for="inside">Service 2:</label>
+                                        <select style="
+                                        width: 300px;
+                                        margin-top: 10px;
+                                        height: 40px;
+                                        padding-left: 20px;
+                                        border-radius: 0px;
+                                        font-family: sans-serif;
+                                        font-size: 12px;" name="service2" id="inside">
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value=" ">None - please select a service</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Consultation">Consultation</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Extraction/pead">Extraction/pead</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Extraction/adult">Extraction/adult</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/amalgam">Restoration/amalgam</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/composite">Restoration/composite</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/GI">Restoration/GI</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/temporary">Restoration/temporary</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="RCT/posterior">RCT/posterior</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="RCT/anterior">RCT/anterior</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Pulpotomy">Pulpotomy</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Pulpectomy">Pulpectomy</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/PFM">Crown(Bridge)/PFM</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Metal">Crown(Bridge)/Metal</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Zirconia">Crown(Bridge)/Zirconia</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Emax">Crown(Bridge)/Emax</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Orthodontic treatment(Braces)">Orthodontic treatment(Braces)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Ortho adjustments">Ortho adjustments</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Denture/partial">Denture/partial</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Denture/complete">Denture/complete</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Implant">Implant</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Scaling and polishing">Scaling and polishing</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Root planning">Root planning</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Root planning/bone graft(surgical)">Root planning/bone graft(surgical)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Surgical Disimpaction">Surgical Disimpaction</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/Peria-apical">X-Ray/Peria-apical</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/OPG(2D)">X-Ray/OPG(2D)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/OPG(Digital)">X-Ray/OPG(Digital)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Retainer/removable">Retainer/removable</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Retainer/fixed">Retainer/fixed</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Impressions for orthodontics">Impressions for orthodontics</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: flex;justify-content: center; align-items: center;">
+                                        <label style="font-family: sans-serif;
+                                        font-size: 12px;"  for="inside">Service 3:</label>
+                                        <select style="
+                                        width: 300px;
+                                        margin-top: 10px;
+                                        height: 40px;
+                                        padding-left: 20px;
+                                        border-radius: 0px;
+                                        font-family: sans-serif;
+                                        font-size: 12px;" name="service3" id="inside">
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value=" ">None - please select a service</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Consultation">Consultation</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Extraction/pead">Extraction/pead</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Extraction/adult">Extraction/adult</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/amalgam">Restoration/amalgam</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/composite">Restoration/composite</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/GI">Restoration/GI</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Restoration/temporary">Restoration/temporary</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="RCT/posterior">RCT/posterior</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="RCT/anterior">RCT/anterior</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Pulpotomy">Pulpotomy</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Pulpectomy">Pulpectomy</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/PFM">Crown(Bridge)/PFM</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Metal">Crown(Bridge)/Metal</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Zirconia">Crown(Bridge)/Zirconia</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Crown(Bridge)/Emax">Crown(Bridge)/Emax</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Orthodontic treatment(Braces)">Orthodontic treatment(Braces)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Ortho adjustments">Ortho adjustments</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Denture/partial">Denture/partial</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Denture/complete">Denture/complete</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Implant">Implant</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Scaling and polishing">Scaling and polishing</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Root planning">Root planning</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Root planning/bone graft(surgical)">Root planning/bone graft(surgical)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Surgical Disimpaction">Surgical Disimpaction</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/Peria-apical">X-Ray/Peria-apical</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/OPG(2D)">X-Ray/OPG(2D)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="X-Ray/OPG(Digital)">X-Ray/OPG(Digital)</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Retainer/removable">Retainer/removable</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Retainer/fixed">Retainer/fixed</option>
+                                            <option class="option" style="font-family: sans-serif; font-size: 12px;" value="Impressions for orthodontics">Impressions for orthodontics</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px;margin-left: 30px;">
+                                <table class="table table-striped">
+                                    
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Cost</th>
+                                            <th scope="row">Units</th>
+                                            <th scope="row">Charge</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Cost 1:</td>
+                                            <td>
+                                                <input class="form-control" style="width: 240px;
+                                                height: 30px;" name="unit1" type="number" placeholder="0">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="width: 240px;
+                                                height: 30px;" name="cost1" type="number" placeholder="0">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cost 2:</td>
+                                            <td>
+                                                <input class="form-control" style="width: 240px;
+                                                height: 30px;" name="unit2" type="number" placeholder="0">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="width: 240px;
+                                                height: 30px;" name="cost2" type="number" placeholder="0">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cost 3:</td>
+                                            <td>
+                                                <input class="form-control" style="width: 240px;
+                                                height: 30px;" name="unit3" type="number" placeholder="0">
+                                            </td>
+                                            <td>
+                                                <input class="form-control" style="width: 240px;
+                                                height: 30px;" name="cost3" type="number" placeholder="0">
+                                            </td>
+                                        </tr>
+                                        <tr class="table-primary">
+                                            <th scope="row"></th>
+                                            <th scope="row">Grand Total</th>
+                                            <th scope="row">
+                                                <input name="total" class="form-control" style="width: 240px;
+                                                height: 30px;" type="number" placeholder="0">
+                                            </th>
+                                            
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div style="display: flex;padding: 15px;">
+                                <label style="font-family: sans-serif;
+                                width: 250px;
+                                font-size: 12px;" for="labx">Paid Amount:</label>
+                                <input type="number" class="form-control" placeholder="Paid Amount" rows="1" style="width: 400px;" col="1" name="deduct" id="labx">
+                            </div>
+                            <div style="display: flex;
+                            margin-top: 10px;
+                            margin-bottom: 20px;
+                            justify-content: center;">
+                                <button name="bill" type="submit" form="bill-form" style=" 
+                                border: none;
+                                font-family: sans-serif;
+                                font-size: 12px;
+                                color: white;
+                                padding: 0 10px;
+                                border-radius: 3px;
+                                background-color: rgb(108, 192, 248);
+                                height: 35px;">Save Payment Information</button><br>
+                            </div>
+                        </div>
+                        <div style="width: 55%; padding-top: 20px;margin-left: 20px;">
+                            <div style="margin-left: 150px;margin-top: 8px;">
+                                <h4 style=" font-family: sans-serif;">Balance: UgSH. 0.00</h4>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <div style="height: 40px;
+                                border-top: 3px solid rgb(108, 192, 248);
+                                border-radius: 3px 3px 0 0;
+                                padding: 10px;
+                                border-bottom: 1px solid rgb(204, 203, 203);
+                                background: rgb(240, 239, 239);">
+                                    <h6 style=" 
+                                    font-family: sans-serif;
+                                    color: rgb(108, 192, 248);">Waiver</h6>
+                                </div>
+                                <div style="padding-top: 20px;background-color: rgb(253, 253, 253);">
+                                    <div style="display: flex;">
+                                        <label style=" 
+                                        font-family: sans-serif;
+                                        font-size: 12px;
+                                        width: 150px;
+                                        margin-left: 30px;" for="vimp">Waiver Amount:</label>
+                                        <input style=" 
+                                        width: 280px;
+                                        font-size: 12px;
+                                        font-family: sans-serif;
+                                        height: 30px;" id="vimp" placeholder="Amount" type="number" name="waiver" class="form-control">
+                                    </div>
+                                    <div style="display: flex;margin-top: 10px;">
+                                        <label style=" 
+                                        font-family: sans-serif;
+                                        font-size: 12px;
+                                        width: 150px;
+                                        margin-left: 30px;" for="vimp">Reason:</label>
+                                        <textarea style=" 
+                                        width: 280px;
+                                        font-size: 12px;
+                                        font-family: sans-serif;
+                                        height: 30px;" id="vimp" placeholder="Reason" name="waiver-reason" type="number" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 15px;">
+
+                                <div style="margin-top: 40px;border-top: 1px solid rgb(204, 203, 203);">
+                                    <table class="table table-striped">
+                                    
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Balance:</th>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+    
+                                    </table>
+                                </div>
+                                <div style="padding-top: 20px;background-color: rgb(253, 253, 253);">
+                                    
+                                    <div style="display: flex;margin-top: 10px;">
+                                        <label style=" 
+                                        font-family: sans-serif;
+                                        font-size: 12px;
+                                        width: 150px;
+                                        margin-left: 30px;" for="vimp">Balance Charge:</label>
+                                        <input style=" 
+                                        width: 280px;
+                                        font-size: 12px;
+                                        font-family: sans-serif;
+                                        height: 30px;" id="vimp" placeholder="Balance" name="lab" type="number" class="form-control">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    //-----for refresh button------
+    const refreshButton = document.getElementById("refreshButton");
+
+    refreshButton.addEventListener("click", function() {
+    window.location.reload();
+    });
+    //-----for the tabs--------
+    function openPage(pageName, elmnt, color) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+    }
+    document.getElementById(pageName).style.display = "block";
+    elmnt.style.backgroundColor = color;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
+</body>
+</html>

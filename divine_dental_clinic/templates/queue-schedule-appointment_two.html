@@ -1,0 +1,192 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>DIVINE DENTAL CLINIC</title>
+    <link rel="shortcut icon" href="{% static 'img/vim-removebg.png' %}" type="image/x-icon">
+    <style>
+        body{
+            background-color: rgb(202, 202, 202);
+        }
+        .universal{
+            display: flex;
+            width: 100%;
+            padding-top: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            background-color: white;
+            width: 63%;
+            padding: 0;
+            border-radius: 5px;
+        }
+        .title{
+            padding: auto;
+            width: 100%;
+            padding-left: 10px;
+            height: 40px;
+            border-bottom: 1px solid rgb(204, 203, 203);
+        }
+        .container .title p{
+            font-family: sans-serif;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .container form{
+            padding: 15px;
+            border-bottom: 1px solid rgb(204, 203, 203);
+        }
+        .form-control{
+            width: 70%;
+            height: 35px;
+        }
+        .form-inputs{
+            display: flex;
+            justify-content: center;
+        }
+        .search-button{
+            background-color: rgb(59, 138, 59);
+            color: rgb(236, 236, 236);
+            font-family: sans-serif;
+            font-size: 12px;
+            border: none;
+            border-radius: 4px;
+            padding: 7px;
+        }
+        .buttons{
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="universal">
+        <div class="container">
+            <div class="title">
+                <p>Schedule Appointment for: {{patient.first_name}} {{patient.last_name}}</p>
+            </div>
+            <form id="search-form" class="form" method="post" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+                <div class="form-inputs">
+                    <div class="form-group" style="
+                    width: 45%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;">
+                        <div style="
+                        display: flex;
+                        align-items: center;">
+                            <label for="inputPassword6" style="font-size: 12px;font-family: sans-serif; width: 20%;">Visit date:</label>
+                            <input type="date" name="date" required id="inputPassword6" class="form-control mx-sm-3" aria-describedby="passwordHelpInline">
+                        </div>
+                        <div style="
+                        display: flex;
+                        align-items: center;">
+                            <label for="inputPassword6" style="font-size: 12px;font-family: sans-serif; width: 20%;">Room:</label>
+                            <select name="room" required id="inputPassword6" class="form-control mx-sm-3">
+                                <option value=" ">---Select Room---</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                        <div style="
+                        display: flex;
+                        align-items: center;">
+                            <label for="inputPassword6" style="font-size: 12px;font-family: sans-serif; width: 20%;">Procedure to be done:</label>
+                            <select name="procedure" required id="inputPassword69" class="form-control mx-sm-3">
+                                <option value=" ">---Procedure to be done---</option>
+                                <option value="Consultation">Consultation</option>
+                                <option value="Extraction/pead">Extraction/pead</option>
+                                <option value="Extraction/adult">Extraction/adult</option>
+                                <option value="Restoration/amalgam">Restoration/amalgam</option>
+                                <option value="Restoration/composite">Restoration/composite</option>
+                                <option value="Restoration/GI">Restoration/GI</option>
+                                <option value="Restoration/temporary">Restoration/temporary</option>
+                                <option value="RCT/posterior">RCT/posterior</option>
+                                <option value="RCT/anterior">RCT/anterior</option>
+                                <option value="Pulpotomy">Pulpotomy</option>
+                                <option value="Pulpectomy">Pulpectomy</option>
+                                <option value="Crown(Bridge)/PFM">Crown(Bridge)/PFM</option>
+                                <option value="Crown(Bridge)/Metal">Crown(Bridge)/Metal</option>
+                                <option value="Crown(Bridge)/Zirconia">Crown(Bridge)/Zirconia</option>
+                                <option value="Crown(Bridge)/Emax">Crown(Bridge)/Emax</option>
+                                <option value="Orthodontic treatment(Braces)">Orthodontic treatment(Braces)</option>
+                                <option value="Ortho adjustments">Ortho adjustments</option>
+                                <option value="Denture/partial">Denture/partial</option>
+                                <option value="Denture/complete">Denture/complete</option>
+                                <option value="Implant">Implant</option>
+                                <option value="Scaling and polishing">Scaling and polishing</option>
+                                <option value="Root planning">Root planning</option>
+                                <option value="Root planning/bone graft(surgical)">Root planning/bone graft(surgical)</option>
+                                <option value="Surgical Disimpaction">Surgical Disimpaction</option>
+                                <option value="X-Ray/Peria-apical">X-Ray/Peria-apical</option>
+                                <option value="X-Ray/OPG(2D)">X-Ray/OPG(2D)</option>
+                                <option value="X-Ray/OPG(Digital)">X-Ray/OPG(Digital)</option>
+                                <option value="Retainer/removable">Retainer/removable</option>
+                                <option value="Retainer/fixed">Retainer/fixed</option>
+                                <option value="Impressions for orthodontics">Impressions for orthodontics</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="
+                    width: 45%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;">
+                        <div style="
+                        display: flex;
+                        align-items: center;">
+                            <label for="inputPassword6" style="font-size: 12px;font-family: sans-serif; width: 20%;">Doctor:</label>
+                            <select required id="inputPassword6" class="form-control mx-sm-3" name="doctor">
+                                <option value=" ">---Select A Doctor---</option>
+                                {% for doctor in doctors %}
+                                    <option value="{{doctor.name}}">{{doctor.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div style="
+                        display: flex;
+                        align-items: center;">
+                            <label for="inputPassword6" style="font-size: 12px;font-family: sans-serif; width: 20%;">Start time:</label>
+                            <input type="time" name="start_time" required id="inputPassword6" class="form-control mx-sm-3" aria-describedby="passwordHelpInline">
+                        </div>
+                        <div style="
+                        display: flex;
+                        align-items: center;">
+                            <label for="inputPassword6" style="font-size: 12px;font-family: sans-serif; width: 20%;">End time:</label>
+                            <input type="time" name="end_time" required id="inputPassword6" class="form-control mx-sm-3" aria-describedby="passwordHelpInline">
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+
+            <div class="buttons">
+                <div class="form-button">
+                    <button  class="search-button" type="submit" form="search-form">Schedule Appointment</button>&nbsp;
+                    <a href="{% url 'queue' %}"><button style=" 
+                    border: 1px solid white;
+                    background-color: white;
+                    font-family: sans-serif;
+                    font-size: 12px;
+                    height: 25px;
+                    width: 50px;
+                    padding: 7px;
+                    border-radius: 5px;">Back</button></a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

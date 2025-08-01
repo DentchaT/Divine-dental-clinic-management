@@ -1,0 +1,569 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>DIVINE DENTAL CLINIC</title>
+    <link rel="shortcut icon" href="{% static 'img/vim-removebg.png' %}" type="image/x-icon">
+    <style>
+
+        .search-appointments{
+            margin-top: -5px;
+            margin-bottom: 20px;
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .search-appointments-container{
+            background-color: rgb(243, 241, 241);
+            border-top: 4px solid rgb(243, 241, 241);
+            padding-top: 5px;
+            padding-left: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .actions2{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            gap: -5px;
+        }
+        .actions2  button{
+            border: none;
+            color: white;
+            height: 30px;
+            border-radius: 5px;
+        }
+        .edit-notes{
+            background-color: white;
+            width: 100%;
+            margin-top: -18px;
+            padding: 3px;
+            display: none;
+            border: 1px solid rgb(224, 224, 224);
+        }
+        .edit-notes p{
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: 660px;  
+            width: 22%;
+        }
+        .edit-notes form{
+            width: 70%;
+        }
+        .edit-notes .col-form-label{
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: 550;
+        }
+        .inputz p{
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: 540;
+        }
+        @media only screen and (max-width: 650px) {
+            .dashboard-cards{
+                width: 100%;
+                display:flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .Dashboardcontainer{
+                width: 98%;
+            }
+        }
+    </style>
+</head>
+
+<body style="background-color: rgb(235, 235, 238);">
+    <header style="position: fixed;width: 100%;">
+        <nav style="width: 100%; padding-top: 1px; background-color: rgb(224, 224, 224);">
+            <div style="
+            display: flex; justify-content: space-between;">
+                <div style="
+                width: 80%; 
+                display: flex;
+                background-color: hsl(0, 0%, 100%);
+                justify-content: space-between;
+                align-items: center;
+                padding: 1%;
+                border-radius: 3px;
+                border: 1px solid rgb(224, 224, 224);">
+                    <div style="display: flex;">
+                        <img style="height: 50px;margin: -20px 0 -20px 0;" src="{% static 'img/vim-removebg.png' %}" alt="img">
+                        <!--<h2 style="font-size: 18px;">DIVINE DENTAL CLINIC</h2>-->
+                    </div>
+                    <button id="refreshButton" style="
+                    background-color: rgb(108, 192, 248); 
+                    border: none;
+                    border-radius: 3px;
+                    color: white;"><i class="fa-solid fa-rotate"></i>Refresh</button>
+                </div>
+                <div class="dropdown" style="
+                display: flex; 
+                align-items: center;
+                padding: 1%;
+                width: 20%;
+                background-color: hsl(0, 0%, 100%);
+                gap: 10px;
+                border: 1px solid rgb(224, 224, 224);
+                border-radius: 3px;
+                align-items: center;">
+
+                    <div>
+                        <img style="width: 30px;height: 30px;border-radius: 50%;" src="{% static 'img/user.jpg' %}" alt="pic">
+                    </div>
+                    <div style="display: flex;flex-direction: column; justify-content: center; height: 30px;">
+                        <p style="font-size: 12px; font-weight: 500; margin-top: 15px;">Good day, {{request.user.username}}</p>
+                        <p style="font-size: 12px; margin-top: -15px; color: grey;font-weight: 500;">TDL</p>
+                    </div>
+                    <div>
+                        <a href="{% url 'my_profile' %}"><button style="
+                            background-color: white;
+                            border: none;"><i class="fa-solid fa-gear"></i></button></a>
+                    </div>
+
+                </div>
+            </div>
+        </nav> 
+        <nav style="
+        border-bottom: 6px solid rgb(108, 192, 248);
+        height: 40px;" class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link active" aria-current="page" href="{% url 'dashboard' %}"><i class="fa-solid fa-house"></i> Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'queue' %}"><i class="fa-solid fa-id-card"></i> Queue</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'appointments' %}"><i class="fa-solid fa-calendar-days"></i> Appointments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'patient_treatment' %}"><i class="fa-solid fa-database"></i> Patient Treatment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 500;color: black;" class="nav-link" href="{% url 'online_diary' %}"><i class="fa-solid fa-calendar-days"></i> Online Diary</a>
+                        </li>
+                    </ul>
+                    
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="extended">
+        <div class="search-appointments" style="padding-top: 130px;">
+            <div style="
+                background-color: rgb(243, 241, 241);
+                color: rgb(61, 61, 61);
+                padding: 5px;
+                display: flex;
+                justify-content: space-between;
+                height: 35px;
+                border-bottom: 1px solid rgb(204, 203, 203);
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;">
+                <h5 style="font-size: 17px; font-family: sans-serif;">Patient Treatment Statements for {{patient.first_name}} {{patient.last_name}}</h5>
+                <a href="{% url 'patient_treatment' %}"><Button style="
+                height: 30px;
+                border: none;
+                background-color: green;
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-size: 12px;">Back to patient treatment</Button></a>
+            </div>
+            <div style=" 
+            padding: 20px;
+            background-color: white;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;">
+                <div class="table-responsive ">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">#</th>
+                                <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Visit Date</th>
+                                <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Doctors Notes</th>
+                                <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Doctor</th>
+                                <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Print Treatment</th>
+                                <th scope="col" style="font-size: 12px;font-family: sans-serif, Courier; font-weight: 700;color: black;">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if patient_history %}
+                                <tr>
+                                    <th scope="row" style="font-size: 12px;font-family: sans-serif, Courier;">{{patient_history.id}}</th>
+                                    <td style="font-size: 12px;font-family: sans-serif, Courier;">{{patient_history.created_at}}</td>
+                                    <td style="font-size: 12px;font-family: sans-serif, Courier;">
+                                        <div>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">Hp C/O</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Hp_CO}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">PM Hx</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.PM_Hx}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">PD Hx</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.PD_Hx}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">Soft Tissue</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Soft_Tissue}}</p><br>
+                                            <div> 
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Hard Tissue</h5>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;margin-left: 18px;">General:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Hard_Tissue_General}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;margin-left: 18px;">Decayed:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Hard_Tissue_Decayed}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;margin-left: 18px;">Filled:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Hard_Tissue_Filled}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;margin-left: 18px;">Missing:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Hard_Tissue_Missing}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;margin-left: 18px;">Other:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Hard_Tissue_Other}}</p><br>
+                                            </div>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">Investigations:</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Investigations}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">Occlusal Exam:</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Occlusal_Exam}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">Findings:</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Findings}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">Plan:</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Plan}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">Rx Done:</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.Rx_Done}}</p><br>
+                                            <h5 style="
+                                            text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                            font-weight: 550;">TCA:</h5>
+                                            <p style="font-size: 12px;font-family: sans-serif;">{{patient_history.TCA}}</p><br>
+                                        </div>
+                                    </td>
+                                    <td style="font-size: 12px;font-family: sans-serif, Courier;">{{patient_history.doctor}}</td>
+                                    <td style="font-size: 12px;font-family: sans-serif, Courier; width: 150px;">
+                                        <div class="actions2">
+                                            <a href="{% url 'download_history' pk=patient.patienthistory_set.all.1.id %}"><button style="background-color: orange;">Print Notes</button></a>
+                                        </div>
+                                    </td>
+                                    <td style="font-size: 12px;font-family: sans-serif, Courier; width: 150px;">
+                                        <div class="actions2">
+                                            <button id="showFormButton" onclick="toggleForm()" style="background-color: green;">Edit notes (2 clicks)</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if historys %}
+                                {% for history in historys %}
+                                    <tr>
+                                        <th scope="row" style="font-size: 12px;font-family: sans-serif, Courier;">{{history.id}}</th>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier;">{{history.created_at}}</td>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier;">
+                                            <div>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Hp C/O</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Hp_CO}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">PM Hx</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.PM_Hx}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">PD Hx</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.PD_Hx}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Soft Tissue</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Soft_Tissue}}</p><br>
+                                                <div> 
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;">Hard Tissue</h5>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">General:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_General}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Decayed:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Decayed}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Filled:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Filled}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Missing:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Missing}}</p><br>
+                                                    <h5 style="
+                                                    text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                    font-weight: 550;margin-left: 18px;">Other:</h5>
+                                                    <p style="font-size: 12px;font-family: sans-serif;">{{history.Hard_Tissue_Other}}</p><br>
+                                                </div>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Investigations:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Investigations}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Occlusal Exam:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Occlusal_Exam}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Findings:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Findings}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Plan:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Plan}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">Rx Done:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.Rx_Done}}</p><br>
+                                                <h5 style="
+                                                text-decoration: underline;font-size: 12px;font-family: sans-serif;
+                                                font-weight: 550;">TCA:</h5>
+                                                <p style="font-size: 12px;font-family: sans-serif;">{{history.TCA}}</p><br>
+                                            </div>
+                                        </td>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier;">{{history.doctor}}</td>
+                                        <td style="font-size: 12px;font-family: sans-serif, Courier; width: 150px;">
+                                            <div class="actions2">
+                                                <a href="{% url 'download_history' history.pk %}"><button style="background-color: orange;">Print Notes</button></a>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="myForm" class="edit-notes">
+                    <p>Todays Visit</p>
+                    <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">HP C/O :</label>
+                            <div class="col-sm-10">
+                            <textarea name="HPC" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div><br>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">PD Hx :</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>-Any previous dental treatment</p>
+                                <p>-Any adverse reactions & experience to dental Rx</p>
+                                <p>-Frequency of brushing</p>
+                                <p>-Food packing, bleeding gums,sensitivity</p>
+                                </div>  
+                                <textarea name="PD" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">PM Hx :</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>-Allergy to any medicine</p>
+                                <p>-Currently on any medication</p>
+                                <p>-Any chronic disease/History of radiation</p>
+                                <p>-Bleeding gums,sensitivity</p>
+                                </div>  
+                                <textarea name="PM" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">General Exam:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>(Pallour , Jaundice, Swelling , Fever , Lymphadenopathy)</p>
+                                </div>  
+                                <textarea name="GE" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div><br>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Soft Tissue:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">  
+                                <textarea name="ST" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div><br>
+
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Hard Tissue:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 100%;">
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">General:</label>
+                                        <div class="col-sm-10" style="overflow-x: hidden;">  
+                                            <textarea name="G" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+                                    </div><br>
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">Decayed:</label>
+                                        <div class="col-sm-10" style="overflow-x: hidden;">  
+                                            <textarea name="D" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+                                    </div><br>
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">Missing:</label>
+                                        <div class="col-sm-10" style="overflow-x: hidden;">  
+                                            <textarea name="M" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+                                    </div><br>
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">Filled:</label>
+                                        <div class="col-sm-10" style="overflow-x: hidden;">  
+                                            <textarea name="F" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+                                    </div><br>
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">Others:</label>
+                                        <div class="col-sm-10" style="overflow-x: hidden;">  
+                                            <div class="inputz" style="width: 1800px;">
+                                                <p>(Impacted, Abrasion, Florosis, Traumatic bite)</p>
+                                            </div>
+                                            <textarea name="O" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Investigations:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>(Please enumerate the items)</p>
+                                </div>  
+                                <textarea name="I" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Occlusal exam:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>(Please enumerate the items)</p>
+                                </div>  
+                                <textarea name="OE" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Findings:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>(Please enumerate the items)</p>
+                                </div>  
+                                <textarea name="F" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Plan Description:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>(Please enumerate the items)</p>
+                                </div>  
+                                <textarea name="PD" class="form-control"  id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Rx Done:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>(Please enumerate the items)</p>
+                                </div>  
+                                <textarea name="RD" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">TCA:</label>
+                            <div class="col-sm-10" style="overflow-x: hidden;">
+                                <div class="inputz" style="width: 1800px;">
+                                <p>(Please enumerate the items)</p>
+                                </div>  
+                                <textarea name="TCA" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" style="
+                        background-color: rgb(108, 192, 248);
+                        color: white;
+                        border: none;
+                        padding: 5px;
+                        margin-top: 20px;
+                        margin-left: 30%;
+                        border-radius: 5px;
+                        width: 30%;
+                        height: 40px;
+                        font-family: sans-serif;">Save Changes</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+<script>
+    //----refresh button----------
+    const refreshButton = document.getElementById("refreshButton");
+
+    refreshButton.addEventListener("click", function() {
+    window.location.reload();
+    });
+
+    //----edit notes button------
+    function toggleForm() {
+        var form = document.getElementById("myForm");
+        if (form.style.display === "none") {
+            form.style.display = "flex";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>
