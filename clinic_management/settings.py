@@ -20,8 +20,8 @@ SECRET_KEY = 'django-insecure-l-44+c3han%c$d896i#b0$+t)586g*5#n*g4e5_5^!+5b_$h8m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-CSRF_TRUSTED_ORIGINS = []
+ALLOWED_HOSTS = ['divine-dental-clinic-management-production.up.railway.app','https://divine-dental-clinic-management-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://divine-dental-clinic-management-production.up.railway.app']
 
 
 # Application definition
