@@ -280,7 +280,7 @@
                         <p>Total Balance Shs:</p>
                         <h5>Ugshs.{{bill.lab}}</h5>
                         <a href="{% url 'admin_individual_statement' patient.pk %}"><button style="background-color: navy;">Statement</button></a>
-                        <a href="{% url 'admin_download_history' pk=patient.patienthistory_set.all.1.id %}"><button style="background-color: orange;">Print History Notes</button></a>
+                        <a href="{% url 'admin_download_history' pk=patient.patienthistory_set.all.0.id %}"><button style="background-color: orange;">Print History Notes</button></a>
                     </div>
                     <div class="patient-bio">
                         <a href="{% url 'admin_queue' %}"><button style="background-color: rgb(108, 192, 248);">Back To Queue</button></a>
